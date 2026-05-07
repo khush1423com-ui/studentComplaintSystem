@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Login / Register</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f6f9; text-align: center; padding: 20px;">
+
+<h2 style="color: #333;">Student Login / Register</h2>
+
+<input type="text" id="studentId" placeholder="Student ID" 
+       style="padding:10px; margin:5px 0; width:250px; border:1px solid #ccc; border-radius:4px;"><br>
+
+<input type="password" id="password" placeholder="Password" 
+       style="padding:10px; margin:5px 0; width:250px; border:1px solid #ccc; border-radius:4px;"><br>
+
+<button onclick="loginStudent()" 
+        style="padding:8px 16px; margin:10px 5px; border:none; border-radius:4px; cursor:pointer; background-color:#3498db; color:#fff;">
+Login</button>
+
+<button onclick="registerStudent()" 
+        style="padding:8px 16px; margin:10px 5px; border:none; border-radius:4px; cursor:pointer; background-color:#2ecc71; color:#fff;">
+Register</button>
+
+<script>
+// 🔹 Ensure students array exists
+if(!localStorage.getItem("students")){
+  localStorage.setItem("students", JSON.stringify([])); // empty array initially
+}
+
+// 🔐 Login function
+function loginStudent() {
+  const studentId = document.getElementById("studentId").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  if(!studentId || !password){
+    alert("Please enter both ID and password!");
+    return;
+  }
+
+  const students = JSON.parse(localStorage.getItem("students")) || [];
+  const student = students.find(s => s.studentId === studentId && s.password === password);
+
+  if(student){
+    localStorage.setItem("isStudentLoggedIn", "true");
+    localStorage.setItem("currentStudent", JSON.stringify(student));
+    alert("Login successful!");
+    window.location.href = "index.html";
+  } else {
+    alert("Invalid ID or password!");
+  }
+}
+
+// 🆕 Register function
+function registerStudent() {
+  const studentId = document.getElementById("studentId").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  if(!studentId || !password){
+    alert("Please enter both ID and password to register!");
+    return;
+  }
+
+  let students = JSON.parse(localStorage.getItem("students")) || [];
+
+  // Check if ID exists
+  const exists = students.some(s => s.studentId.toLowerCase() === studentId.toLowerCase());
+  if(exists){
+    alert("Student ID already exists! Choose a different ID.");
+    return;
+  }
+
+  // Add new student
+  students.push({ studentId, password });
+  localStorage.setItem("students", JSON.stringify(students));
+
+  alert(`Registration successful! Your Student ID is: ${studentId}\nYou can now log in.`);
+  
+  // Clear input fields
+  document.getElementById("studentId").value = "";
+  document.getElementById("password").value = "";
+}
+</script>
+
+</body>
+</html>

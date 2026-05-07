@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Complaint - Student Complaint System</title>
+
+  <link rel="stylesheet" href="custom/style.css">
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="left-buttons">
+        
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="complaint.html">complaint Form</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MINI HERO -->
+  <section class="form-hero">
+    <h1>Submit Your Complaint</h1>
+  </section>
+
+  <!-- FORM SECTION -->
+  <div class="form-container">
+    <h2>Complaint Submission Form</h2>
+    <form action="#" method="POST">
+      
+      <div class="form-group">
+        <label for="student-name">Student Name</label>
+        <input type="text" id="student-name" name="student-name" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="student-email">Email</label>
+        <input type="email" id="student-email" name="student-email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="student-id">Student ID / Roll Number</label>
+        <input type="text" id="student-id" name="student-id" placeholder="Enter your student ID" required>
+      </div>
+
+      <div class="form-group">
+        <label for="department">Department</label>
+        <select id="department" name="department" required>
+          <option value="">-- Select Department --</option>
+          <option value="CSE">CSE</option>
+          <option value="ECE">ECE</option>
+          <option value="Mechanical">Mechanical</option>
+          <option value="Civil">Civil</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="complaint-type">Complaint Type</label>
+        <select id="complaint-type" name="complaint-type" required>
+          <option value="">-- Select Type --</option>
+          <option value="Academic">Academic</option>
+          <option value="Facilities">Facilities</option>
+          <option value="Faculty">Faculty</option>
+          <option value="Other">Electricity issue</option>
+          <option value="Other">Drinking water issue </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="complaint-details">Complaint Details</label>
+        <textarea id="complaint-details" name="complaint-details" placeholder="Describe your issue in detail" required></textarea>
+      </div>
+      
+      
+      <button type="submit" class="submit-btn">Submit Complaint</button>
+    </form>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <p>We provide an easy platform for students to submit complaints and access admin services efficiently.</p>
+      </div>
+
+      <div class="footer-section contact">
+        <h3>Contact Us</h3>
+        <div class="contact-row">
+          <p>Email: support@example.com</p>
+          <p>Phone: +91 98765 43210</p>
+          <p>Location: India</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Student Complaint System | All Rights Reserved</p>
+    </div>
+  </footer>
+
+
+  <!-- Inside submit.html, before </body> -->
+<script>
+  const form = document.querySelector('form');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault(); // prevent default form submission
+
+    // Get form values
+    const complaint = {
+      name: document.getElementById('student-name').value,
+      email: document.getElementById('student-email').value,
+      studentId: document.getElementById('student-id').value,
+      department: document.getElementById('department').value,
+      type: document.getElementById('complaint-type').value,
+      details: document.getElementById('complaint-details').value,
+      status: 'Pending'
+    };
+
+    // Get existing complaints from localStorage
+    let complaints = JSON.parse(localStorage.getItem('complaints')) || [];
+
+    // Add new complaint
+    complaints.push(complaint);
+
+    // Save back to localStorage
+    localStorage.setItem('complaints', JSON.stringify(complaints));
+
+    // Reset form
+    form.reset();
+
+    alert('Your complaint has been submitted successfully!');
+  });
+  
+</script>
+</body>
+</html>
